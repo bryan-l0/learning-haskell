@@ -1,68 +1,102 @@
-Labs - 20% - 03-11, 24-11, 15-12
-Coursework - 40% - 12-01
-Exam - 40% - January
+# Functional Programming with Haskell
+
+## Grades
+
+**Labs - 20%**
+
+**Coursework - 40%**
+
+**Exam - 40%**
+
+## Overview
 
 Imperative Programs: Instructions on how to mainipulate memory
+
 Functional Content: What is the solution to the problem
+
 Implementational Content: How to solve the problem
 
 Functional Programs:
+
 - High level behaviour and low level implementation
 - Humans focusing on the high level functional behaviour
 - Compiler focusing on memory management and implementation details
 
-Arithmetic Functions: + * - div mod abs
-Comparison Functions: > >= == /= <= <
-List Functions: 
-	head xs (select first element)
-	tail xs (remove first element)
-	length xs (length of list)
-	xs !! n (select nth element)
-	take n xs (select first n elements)
-	drop n xs (remove first n elements)
-	xs ++ ys (appends two lists)
-	sum xs (sums elements in list)
-	product xs (calculates product of elements in list)
-	reverse xs (reverses list)
-	repeat x (creates infinite list of xs)
-Boolean Functions:
-	&& :: Bool -> Bool -> Bool
-	|| :: Bool -> Bool -> Bool
-	not:: Bool -> Bool
-	if bexp then exp1 else exp2
+## Basic Types and Functions
 
-Types
-e :: t - Expression e that produces value with type t
+### Arithmetic Functions: 
 
-Chars
-ord :: Char -> Int
-chr :: Int -> Char
+    + * - div mod abs
 
-Strings
-Essentially list of chars. "hello" :: [Char]
+### Comparison Functions: 
 
-Numbers
+    > >= == /= <= <
+
+### List Functions: 
+
+  	head xs (select first element)
+  	tail xs (remove first element)
+  	length xs (length of list)
+  	xs !! n (select nth element)
+  	take n xs (select first n elements)
+  	drop n xs (remove first n elements)
+  	xs ++ ys (appends two lists)
+  	sum xs (sums elements in list)
+  	product xs (calculates product of elements in list)
+  	reverse xs (reverses list)
+  	repeat x (creates infinite list of xs)
+
+### Boolean Functions:
+
+  	&& :: Bool -> Bool -> Bool
+  	|| :: Bool -> Bool -> Bool
+  	not:: Bool -> Bool
+  	if bexp then exp1 else exp2
+
+### Types
+
+    e :: t - Expression e that produces value with type t
+
+### Chars
+
+    ord :: Char -> Int
+    chr :: Int -> Char
+
+### Strings
+
+Essentially a list of chars. 
+
+    "hello" :: [Char]
+
+### Numbers
+
 Int: -2^63 to 2^63 - 1
-floor, ceiling, round :: Float -> Int
-fromInt :: Int -> Float
 
-List Formation
-(:) :: a -> [a] -> [a]
-[] :: [a]
+    floor, ceiling, round :: Float -> Int
+    fromInt :: Int -> Float
+
+### List Formation
+
+    (:) :: a -> [a] -> [a]
+    [] :: [a]
+
 1 : 2 : 3 : [] is equivalent to [1,2,3]
 
-Tuples
+### Tuples
+
 (T1,T2,...,Tn) is the type of n-tuples, with value (v1,v2,...,vn), and each vi has type Ti
 
-Functions
+### Functions
+
 T -> U - Takes value of type T and returns value of type U
 
-Curried Functions
-add' :: Int -> (Int -> Int)
-add' x y = x + y
+### Curried Functions
 
-mult :: Int -> (Int -> (Int -> Int))
-mult x y z = x * y * z
+    add' :: Int -> (Int -> Int)
+    add' x y = x + y
+
+    mult :: Int -> (Int -> (Int -> Int))
+    mult x y z = x * y * z
 
 Eq Class: Types that support (==), (/=)
 Ord Class: Types that support (<), (>), (<=), (>=), min, max
@@ -72,258 +106,298 @@ Num Class: Types that represent numbers and support (+), (-), (*), negate, abs, 
 Integral Class: Types that support div and mod
 Fractional Class: Types that support (/) and recip
 
-Guarded Equations
-abs5 :: (Ord a, Num a) => a -> a
-abs5 n | n >= 0    = m
-       | otherwise = -m
- where m = n * 5
+### Guarded Equations
 
-Pattern Matching
-fetch :: Int -> [a] -> a
-fetch _ [] = error "Empty List"
-fetch 0 (x:_) = x
-fetch n (_:xs) = fetch (n - 1) xs
+    abs5 :: (Ord a, Num a) => a -> a
+    abs5 n | n >= 0    = m
+           | otherwise = -m
+     where m = n * 5
 
-Lambda Expressions
-add :: Num a => a -> a -> a
-add = \x -> (\y -> x + y)
+### Pattern Matching
 
-const :: a -> b -> a
-const x = \_ -> x
+    fetch :: Int -> [a] -> a
+    fetch _ [] = error "Empty List"
+    fetch 0 (x:_) = x
+    fetch n (_:xs) = fetch (n - 1) xs
 
-addNewLine :: (String,String) -> (String,String)
-addNewLine (s,s') = (f s,f s')
- where f = \x -> (x++'\n')
+### Lambda Expressions
 
-List Comprehension
-[x^2 | x <- [1..5]]
-[(x,y) | y <- [4,5], x <- [1,2,3]]
+    add :: Num a => a -> a -> a
+    add = \x -> (\y -> x + y)
 
-factors :: Int -> [Int]
-factors n = [x | x <- [1..n], n `mod` x == 0]
+    const :: a -> b -> a
+    const x = \_ -> x
 
-Recursion
-fac 0 = 1
-fac n = n * fac (n - 1)
+    addNewLine :: (String,String) -> (String,String)
+    addNewLine (s,s') = (f s,f s')
+     where f = \x -> (x++'\n')
 
-product :: Num a => [a] -> a
-product [] = 1
-product (x:xs) = x * product xs
+### List Comprehension
 
-Mutual Recursion
-evens :: [a] -> [a]
-evens [] = []
-evens  (x:xs) = x : odds xs
+    [x^2 | x <- [1..5]]
+    [(x,y) | y <- [4,5], x <- [1,2,3]]
 
-odds :: [a] -> [a]
-odds [] = []
-odds (x:xs) = evens xs
+    factors :: Int -> [Int]
+    factors n = [x | x <- [1..n], n `mod` x == 0]
 
-Tail Recursion (Not Optimal due to Haskell's lazy evauluation)
-fac' :: Int -> Int -> Int
-fac' acc 0 = acc
-fac' acc n = fac' (n * acc) (n - 1)
+### Recursion
 
-Zip
-zip :: [a] -> [b] -> [(a,b)]
-zip [] _ = []
-zip _ [] = []
-zip (x:xs) (y:ys) = (x,y) : zip xs ys
+    fac 0 = 1
+    fac n = n * fac (n - 1)
 
-Higher Order Functions: Abstracting a function, e.g. Map
-map :: (a -> b) -> [a] -> b
-map f [] = []
-map f (x:xs) = f x : map f xs
+    product :: Num a => [a] -> a
+    product [] = 1
+    product (x:xs) = x * product xs
 
-filter :: (a -> Bool) -> [a] -> [a]
-filter p [] = []
-filter p (x:xs) | p x       = x : filter p xs
-                | otherwise = filter p xs
+### Mutual Recursion
 
-$ Operator
-($) :: (a -> b) -> a -> b
-f $ x = f x
+    evens :: [a] -> [a]
+    evens [] = []
+    evens  (x:xs) = x : odds xs
+
+    odds :: [a] -> [a]
+    odds [] = []
+    odds (x:xs) = evens xs
+
+### Tail Recursion (May not optimal due to Haskell's lazy evauluation)
+
+    fac' :: Int -> Int -> Int
+    fac' acc 0 = acc
+    fac' acc n = fac' (n * acc) (n - 1)
+
+## Higher Order Functions
+
+### Zip
+
+    zip :: [a] -> [b] -> [(a,b)]
+    zip [] _ = []
+    zip _ [] = []
+    zip (x:xs) (y:ys) = (x,y) : zip xs ys
+
+### Map
+
+    map :: (a -> b) -> [a] -> b
+    map f [] = []
+    map f (x:xs) = f x : map f xs
+
+### Filter
+
+    filter :: (a -> Bool) -> [a] -> [a]
+    filter p [] = []
+    filter p (x:xs) | p x       = x : filter p xs
+                    | otherwise = filter p xs
+
+### $ Operator
+
+    ($) :: (a -> b) -> a -> b
+    f $ x = f x
+
 Associates to the right instead of left
-sqrt $ a^2 + b^2 = sqrt (a^2 + b^2)
 
-Fold(r/l)
-foldr :: (a -> b -> b) -> b -> [a] -> b
-foldr f v [] = v
-foldr f v (x:xs) = f x (foldr f v xs)
+    sqrt $ a^2 + b^2 = sqrt (a^2 + b^2)
 
-sum :: Num a => [a] -> a
-sum = foldr (+) 0
-product :: Num a => [a] -> a
-product = foldr (*) 1
-and :: [Bool] -> Bool
-and = foldr (&&) True
+### Fold(r/l)
 
-foldl :: (b -> a -> b) -> b -> [a] -> b
-foldl f acc [] = acc
-foldl f acc (x:xs) = foldl f (f acc x) xs
+    foldr :: (a -> b -> b) -> b -> [a] -> b
+    foldr f v [] = v
+    foldr f v (x:xs) = f x (foldr f v xs)
 
-Type Synonyms
-type Pos = (Int, Int)
-origin :: Pos
-origin = (0, 0)
-moveLeft :: Pos -> Pos
-moveLeft (x, y) = (x-1, y)
+    sum :: Num a => [a] -> a
+    sum = foldr (+) 0
 
-type Assoc k v = [ (k, v) ]
-find :: Eq k => k -> Assoc k v -> v
-find k t = head [ v | (k', v) <- t, k == k' ]
--- This can not be partially applied.
+    product :: Num a => [a] -> a
+    product = foldr (*) 1
+
+    and :: [Bool] -> Bool
+    and = foldr (&&) True
+
+    foldl :: (b -> a -> b) -> b -> [a] -> b
+    foldl f acc [] = acc
+    foldl f acc (x:xs) = foldl f (f acc x) xs
+
+### Type Synonyms
+
+    type Pos = (Int, Int)
+    origin :: Pos
+    origin = (0, 0)
+    moveLeft :: Pos -> Pos
+    moveLeft (x, y) = (x-1, y)
+
+    type Assoc k v = [ (k, v) ]
+    find :: Eq k => k -> Assoc k v -> v
+    find k t = head [ v | (k', v) <- t, k == k' ]
+
+This can not be partially applied.
 
 They can be nested but not recursed.
-type Pos = (Int, Int), type Translation = Pos -> Pos
-type Tree = (Int, [Tree]) -- Does not work
 
-New Types with Constructors
-- Lets say we want a type Foo that behaves like an Int but doesn't take an Int, e.g. sanitised inputs. We can introduct a constructor into the value of the type. This allows for type safety.
-data Foo = F Int - :t F 5 =: F 5 :: Foo
-data Day = Mon | Tue | Wed | Thu | Fri | Sat | Sun
-isWeekend :: Day -> Bool
-isWeekend Sat = True
-isWeekend Sun = True
-isWeekend _ = False
+    type Pos = (Int, Int), type Translation = Pos -> Pos
+    type Tree = (Int, [Tree]) -- Does not work
 
-isWeekday :: Day -> Bool
-isWeekday = not.isWeekend
+## New Types with Constructors
 
-Constructors with Multiple Parameters
-data Shape = Circle Float | Rect Float Float
-square :: Float -> Shape
-square n = Rect n n
+Lets say we want a type Foo that behaves like an Int but doesn't take an Int, e.g. sanitised inputs.
 
-area :: Float -> Shape
-area (Circle r) = pi * r^2
-area (Rect x y) = x * y
+We can introduct a constructor into the value of the type. This allows for type safety.
 
--- Values of the Maybe type is either the nullary constructor Nothing or a value with type Just
-data Maybe a = Nothing | Just a
+    data Foo = F Int - :t F 5 =: F 5 :: Foo
+    data Day = Mon | Tue | Wed | Thu | Fri | Sat | Sun
+    isWeekend :: Day -> Bool
+    isWeekend Sat = True
+    isWeekend Sun = True
+    isWeekend _ = False
 
-safeHead :: [a] -> Maybe a
-safeHead [] = Nothing
-safeHead xs = Just (head xs
+    isWeekday :: Day -> Bool
+    isWeekday = not.isWeekend
+
+### Constructors with Multiple Parameters
+
+    data Shape = Circle Float | Rect Float Float
+    square :: Float -> Shape
+    square n = Rect n n
+
+    area :: Float -> Shape
+    area (Circle r) = pi * r^2
+    area (Rect x y) = x * y
+
+### Values of the Maybe type is either the nullary constructor Nothing or a value with type Just
+
+    data Maybe a = Nothing | Just a
+
+    safeHead :: [a] -> Maybe a
+    safeHead [] = Nothing
+    safeHead xs = Just (head xs)
 
 Declaring types like Foo above has a computational cost, hence we can use the newtype declaration. It can only be used for types of a single unary constructor.
-newtype Foo = F Int
-add :: Foo -> Foo -> Foo
-add (F n) (F m) = F (n + m)
-add (F 3) (F 5) returns (F 8)
 
-Recursive Types
-data MyList a = Empty | Cons a (MyList a)
-dup Empty = Empty
-dup (Cons m ms) = Cons m $ Cons m (dup ms)
+    newtype Foo = F Int
+    add :: Foo -> Foo -> Foo
+    add (F n) (F m) = F (n + m)
+    add (F 3) (F 5) returns (F 8)
 
-data Tree a = Leaf a | Node (Tree a) a (Tree a)
-t :: Tree Int
-t = Node (Node (Leaf 1) 3 (Leaf 4)) 5 (Node (Leaf 6) 7 (Leaf 9))
-contains :: Eq a => a -> Tree a -> Bool
-contains x (Leaf y) = x == y
-contains x (Node l y r) = x == y || contains x l || contains x r
-flatten :: Tree a -> [a]
-flatten (Leaf y) = [y]
-flatten (Node l y r) = flatten l ++ [y] ++ flatten r
+### Recursive Types
 
-data LTree a = Leaf a | Node (LTree a) (LTree a)
-data ITree a = Leaf | Node (ITree a) a (ITree a)
-data DTree a b = Leaf a | Node (DTree a b) b (DTree a b)
-data MTree a = Node a [MTree a]
+    data MyList a = Empty | Cons a (MyList a)
+    dup Empty = Empty
+    dup (Cons m ms) = Cons m $ Cons m (dup ms)
 
-Writing Functions on all Tree Types
-class Tree a where
-  flatten :: Tree a -> [a]
+    data Tree a = Leaf a | Node (Tree a) a (Tree a)
+    t :: Tree Int
+    t = Node (Node (Leaf 1) 3 (Leaf 4)) 5 (Node (Leaf 6) 7 (Leaf 9))
+    contains :: Eq a => a -> Tree a -> Bool
+    contains x (Leaf y) = x == y
+    contains x (Node l y r) = x == y || contains x l || contains x r
+    flatten :: Tree a -> [a]
+    flatten (Leaf y) = [y]
+    flatten (Node l y r) = flatten l ++ [y] ++ flatten r
 
-class Eq a => Ord a where
-  (<), (<=), (>), (>=) :: a -> a -> Bool
-  min, max :: a -> a -> Bool
-  min x y | x <= y = x
-          | otherwise = y
-  max x y | x <= y = y
-          | otherwise = x
+    data LTree a = Leaf a | Node (LTree a) (LTree a)
+    data ITree a = Leaf | Node (ITree a) a (ITree a)
+    data DTree a b = Leaf a | Node (DTree a b) b (DTree a b)
+    data MTree a = Node a [MTree a]
 
-class CONSTRAINTS => NAME a where
-  function :: type
-  function :: type
-  ...
-  function = default definition
-  function = default definition
-  ...
+### Writing Functions on all Tree Types
+
+    class Tree a where
+      flatten :: Tree a -> [a]
+
+    class Eq a => Ord a where
+      (<), (<=), (>), (>=) :: a -> a -> Bool
+      min, max :: a -> a -> Bool
+      min x y | x <= y = x
+              | otherwise = y
+      max x y | x <= y = y
+              | otherwise = x
+
+    class CONSTRAINTS => NAME a where
+      function :: type
+      function :: type
+      ...
+      function = default definition
+      function = default definition
+      ...
 
 Declaring Instances - use the instance keyword, and implement all undefined methods
-instance Ord Bool where
-  False < True = True
-  _     < _    = False
-  b <= c = (b < c) || (b == c)
-  b > c = c < b
-  b >= c = c <= b
 
-class Tree a where
-  flatten :: Tree a -> [a]
+    instance Ord Bool where
+      False < True = True
+      _     < _    = False
+      b <= c = (b < c) || (b == c)
+      b > c = c < b
+      b >= c = c <= b
 
-instance Tree LTree where
-  flatten (Leaf a) = [a]
-  flatten (Node l r) = flatten l ++ flatten r
+    class Tree a where
+      flatten :: Tree a -> [a]
 
-instance Tree ITree where
-  flatten (Leaf) = []
-  flatten (Node l y r) = flatten l ++ [y] ++ flatten r
+    instance Tree LTree where
+      flatten (Leaf a) = [a]
+      flatten (Node l r) = flatten l ++ flatten r
 
-instance Tree MTree where
-  flatten (Node a cs) = a : map flatten cs
+    instance Tree ITree where
+      flatten (Leaf) = []
+      flatten (Node l y r) = flatten l ++ [y] ++ flatten r
 
-Deriving Instances
-data Day = Mon | Tue | Wed | Thu | Fri | Sat | Sun
-  deriving (Eq, Ord, Show, Read)
+    instance Tree MTree where
+      flatten (Node a cs) = a : map flatten cs
+
+### Deriving Instances
+
+    data Day = Mon | Tue | Wed | Thu | Fri | Sat | Sun
+      deriving (Eq, Ord, Show, Read)
+
 This implements functions in those classes by following the structure of type Day.
+
 e.g. Show will print the string name, < is defined s.t. Mon < Tue ... < Sun.
 
 If the type is declared to derive a class, all the parameters must derive that class too.
-data Shape = Circle Float | Rect Float Float
-  deriving (Eq, Ord, Show, Read)
 
--- This doesn't work because (a -> a) is not an instance of the Eq class so no default == implementation can be found.
-data DocumentedFunction a = Doc String (a -> a)
-  deriving Eq
+    data Shape = Circle Float | Rect Float Float
+      deriving (Eq, Ord, Show, Read)
 
-Red Black Trees
-data RBTree a = Leaf a | RedNode a (RBTree a) (RBTree a) | BlackNode a (RBTree a) (RBTree a)
-blackH (Leaf _ _ ) = 0
-blackH (RedNode _ l r) = maxlr
-blackH (BlackNode _ l r) = 1 + maxlr
-  where maxlr = max (blackH l) (blackH r)
+This doesn't work because (a -> a) is not an instance of the Eq class so no default == implementation can be found.
 
-AST for Arithmetic Expressions
-data Expr = Val Int | Add Expr Expr | Sub Expr Expr
-eval :: Expr -> Int
-eval (Val n) = n
-eval (Add e1 e2) = eval e1 + eval e2
-eval (Sub e1 e2) = eval e1 - eval e2
+    data DocumentedFunction a = Doc String (a -> a)
+      deriving Eq
 
-data Prop = Const Bool | Var Char | Not Prop | And Prop Prop | Imply Prop Prop
-eval :: Subst -> Prop -> Bool
-eval s (Const b) = b
-eval s (Var c) = find c s
-eval s (Not p) = not $ eval s p
-eval s (And p q) = eval s p && eval s q
-eval s (Imply p q) = eval s p <= eval s q
+### Red Black Trees
 
-Higher Order Functions and Trees
-data LTree a = Leaf a | Node (LTree a) (LTree a)
-lTMap :: (a -> b) -> LTree a -> LTree b
-lTMap g (Leaf x) = Leaf (g x)
-lTMap g (Node l r) = Node (lTMap g l) (lTMap g r)
+    data RBTree a = Leaf a | RedNode a (RBTree a) (RBTree a) | BlackNode a (RBTree a) (RBTree a)
+    blackH (Leaf _ _ ) = 0
+    blackH (RedNode _ l r) = maxlr
+    blackH (BlackNode _ l r) = 1 + maxlr
+      where maxlr = max (blackH l) (blackH r)
 
-data ITree a = Leaf | Node a (ITree a) (ITree a)
-iTMap :: (a -> b) -> ITree a -> ITree b
-iTMap g (Leaf) = Leaf
-iTMap g (Node x l r) = Node (g x) (iTMap g l) (iTMap g r)
+### AST for Arithmetic Expressions
 
-data MTree a = Node a [MTree a]
-mTMap :: (a -> b) -> MTree a -> MTree b
-mTMap g (Node x ts) = Node (g x) (map (mTMap g) ts)
+    data Expr = Val Int | Add Expr Expr | Sub Expr Expr
+    eval :: Expr -> Int
+    eval (Val n) = n
+    eval (Add e1 e2) = eval e1 + eval e2
+    eval (Sub e1 e2) = eval e1 - eval e2
+
+    data Prop = Const Bool | Var Char | Not Prop | And Prop Prop | Imply Prop Prop
+    eval :: Subst -> Prop -> Bool
+    eval s (Const b) = b
+    eval s (Var c) = find c s
+    eval s (Not p) = not $ eval s p
+    eval s (And p q) = eval s p && eval s q
+    eval s (Imply p q) = eval s p <= eval s q
+
+### Higher Order Functions and Trees
+
+    data LTree a = Leaf a | Node (LTree a) (LTree a)
+    lTMap :: (a -> b) -> LTree a -> LTree b
+    lTMap g (Leaf x) = Leaf (g x)
+    lTMap g (Node l r) = Node (lTMap g l) (lTMap g r)
+
+    data ITree a = Leaf | Node a (ITree a) (ITree a)
+    iTMap :: (a -> b) -> ITree a -> ITree b
+    iTMap g (Leaf) = Leaf
+    iTMap g (Node x l r) = Node (g x) (iTMap g l) (iTMap g r)
+
+    data MTree a = Node a [MTree a]
+    mTMap :: (a -> b) -> MTree a -> MTree b
+    mTMap g (Node x ts) = Node (g x) (map (mTMap g) ts)
 
 ## Functors
 
