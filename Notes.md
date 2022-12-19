@@ -80,7 +80,11 @@ Int: -2^63 to 2^63 - 1
     (:) :: a -> [a] -> [a]
     [] :: [a]
 
-1 : 2 : 3 : [] is equivalent to [1,2,3]
+    1 : 2 : 3 : []
+
+is equivalent to 
+
+    [1, 2, 3]
 
 ### Tuples
 
@@ -102,7 +106,7 @@ Eq Class: Types that support (==), (/=)
 Ord Class: Types that support (<), (>), (<=), (>=), min, max
 Show Class: Types that support the function show :: a -> String
 Read Class: Types that support the function read :: String -> a
-Num Class: Types that represent numbers and support (+), (-), (*), negate, abs, signum
+Num Class: Types that represent numbers and support (+), (-), (\*), negate, abs, signum
 Integral Class: Types that support div and mod
 Fractional Class: Types that support (/) and recip
 
@@ -545,6 +549,7 @@ Cases need to be interpreted by conjoining the negation of the previous case gua
 
 
 ### List Example
+
 #### Proving reverse xs = xs for any singleton list xs
 
     reverse :: [a] -> [a]
@@ -569,4 +574,64 @@ Proof by induction uses the fact that natural numbers are a Structured Data Type
 
     data Nat = Zero | Succ Nat
 
-Proving reverse (reverse xs) = xs for any list xs
+To prove P(n) holds for all values of type Nat, we prove:
+
+- P(Zero)
+- P(Succ x) under the assumption that P(x)
+
+The semantics of algebraic data types are such that this principle is valid - this covers all values of type Nat.
+
+    add :: Nat -> Nat -> Nat
+    add Zero m = m
+    add (Succ n) m = Succ (add n m)
+
+#### Associativity Proof
+
+We need to show for all x, y, z:
+
+    add x (add y z) = add (add x y) z
+
+We can do this by induction.
+
+##### Base Case (Zero)
+
+    add Zero (add y z)
+    = { definition of add }
+
+    add y z
+    = { definition of add 'backwards' }
+
+##### Inductive Case (Succ x)
+
+    add (Succ x) (add y z)
+    = { definition of add }
+    Succ (add x (add y z)))
+    = { inductive hypothesis }
+    Succ (add (add x y) z)
+    = { definition of add 'backwards' }
+    add (Succ (add x y) z)
+    = { definition of add 'backwards' }
+
+Proof by induction works on any structured data type.
+
+To prove P(x) for all values in type T, it is sufficient to prove:
+- P(C) for all constructors C in T that have no recursive arguments.
+- P(F x) assuming that P(x) holds for all constructors F in T that have a single recursive argument.
+- P(G x y) assuming that P(x) and P(y) hold for all constructors G in T that have two recursive arguments.
+
+#### Induction on Lists
+
+Consider the datatype Lists: 
+
+    ( data [ a ] = [] | (:) a [ a ])
+
+It has a constructor [], as well as (:) whose second argument is recursive.
+
+To prove P(xs) for all lists we must prove:
+
+- P([])
+- P(x : xs) under the assumption that P(xs)
+
+#### Involutive Proof
+
+
